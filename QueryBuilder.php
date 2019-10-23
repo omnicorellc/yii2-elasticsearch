@@ -17,7 +17,7 @@ use yii\helpers\Json;
  * @author Carsten Brandt <mail@cebe.cc>
  * @since 2.0
  */
-class QueryBuilder extends \yii\base\Object
+class QueryBuilder extends \yii\base\BaseObject
 {
     /**
      * @var Connection the database connection.

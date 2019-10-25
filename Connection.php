@@ -196,7 +196,7 @@ class Connection extends Component
             $this->nodes = array_values($nodes);
         } else {
             curl_close($this->_curl);
-            throw new Exception('Cluster autodetection did not find any active node. Make sure a GET /_nodes reguest on the hosts defined in the config returns the "http_address" field for each node.');
+            throw new \Exception('Cluster autodetection did not find any active node. Make sure a GET /_nodes reguest on the hosts defined in the config returns the "http_address" field for each node.');
         }
     }
 
@@ -496,7 +496,7 @@ class Connection extends Component
         curl_setopt($this->_curl, CURLOPT_URL, $url);
         curl_setopt_array($this->_curl, $options);
         if (curl_exec($this->_curl) === false) {
-            throw new Exception('Elasticsearch request failed: ' . curl_errno($this->_curl) . ' - ' . curl_error($this->_curl), [
+            throw new \Exception('Elasticsearch request failed: ' . curl_errno($this->_curl) . ' - ' . curl_error($this->_curl), [
                 'requestMethod' => $method,
                 'requestUrl' => $url,
                 'requestBody' => $requestBody,
@@ -516,7 +516,7 @@ class Connection extends Component
                 return true;
             } else {
                 if (isset($headers['content-length']) && ($len = mb_strlen($body, '8bit')) < $headers['content-length']) {
-                    throw new Exception("Incomplete data received from elasticsearch: $len < {$headers['content-length']}", [
+                    throw new \Exception("Incomplete data received from elasticsearch: $len < {$headers['content-length']}", [
                         'requestMethod' => $method,
                         'requestUrl' => $url,
                         'requestBody' => $requestBody,
@@ -533,7 +533,7 @@ class Connection extends Component
                         return $raw ? $body : array_filter(explode("\n", $body));
                     }
                 }
-                throw new Exception('Unsupported data received from elasticsearch: ' . $headers['content-type'], [
+                throw new \Exception('Unsupported data received from elasticsearch: ' . $headers['content-type'], [
                     'requestMethod' => $method,
                     'requestUrl' => $url,
                     'requestBody' => $requestBody,
@@ -545,7 +545,7 @@ class Connection extends Component
         } elseif ($responseCode == 404) {
             return false;
         } else {
-            throw new Exception("Elasticsearch request failed with code $responseCode.", [
+            throw new \Exception("Elasticsearch request failed with code $responseCode.", [
                 'requestMethod' => $method,
                 'requestUrl' => $url,
                 'requestBody' => $requestBody,
